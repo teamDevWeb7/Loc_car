@@ -3,7 +3,8 @@ if(isset($_GET['page'])){
     $page=$_GET['page'];
     switch($page){
         case'addVehicule':
-            include dirname(__DIR__)."/view/addVehicule.php";
+            // on va sur controler car c'est lui qui gere ce qu'il  y a dans la page, ce que veut le user
+            include dirname(__DIR__)."/controler/addVehiculeControler.php";
             break;
 
         case 'home':
