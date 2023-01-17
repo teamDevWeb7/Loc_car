@@ -1,0 +1,18 @@
+{
+    "name": "compote/loc_car",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "teamDevWeb7",
+            "email": "suray.amelyne@gmail.com"
+        }
+    ],
+
+    "require": {}, 
+    "autoload":{
+        "psr-4":{
+            "Core\\":"core/"
+        }
+    }
+}

@@ -1,4 +1,8 @@
 <?php
+namespace Core\bdd;
+// pour pdo antishlash ou
+// use PDO
+// use PDOException
 class BDD{
     // seule utilité de l'objet est de s assurer qu'il n y ai qu'une co à la bdd en même tps
     private string $host;
@@ -11,7 +15,8 @@ class BDD{
     // singleton ->objet qui s'assure tt le tps que lui même n'existe qu'une seule fois
     // si pas d'instance on en fait 1 sinon on renvoit celle qui existe
 
-    public PDO $connection;
+    // je mets un anti slash car endroit fichier a bouger a cause composer, donc antishlash pour ramener àà la racine de php ou se trouve PDO
+    public \PDO $connection;
 
     public static BDD $instance;
 
@@ -25,11 +30,11 @@ class BDD{
         $this->char=$char;
         try {
             //connection appartient à l'instance
-            $this->connection=new PDO("mysql:host={$this->host};
+            $this->connection=new \PDO("mysql:host={$this->host};
                                         dbname={$this->dbname};
                                         charset={$this->char}", 
                                         $this->user, $this->mdp);
-        }catch(PDOException $e){
+        }catch(\PDOException $e){
             echo "[ERREUR]=>{$e->getMessage()}";
             die;
         }
