@@ -2,10 +2,20 @@
 // permet de ne pas mettre le chemin devant l'objet DBB lors de l'instanciation de l'objet
 // creation alias
 use Core\bdd\BDD;
+
+// aller chercher ce qu'on a pris sur composer
+use GuzzleHttp\Psr7\ServerRequest;
+use Core\App;
+
 // tout ça pour avoir un autoload généré automatiquement + chemin parfaits car sur serveur c'est le bordel
 include dirname(__DIR__)."/vendor/autoload.php";
 
+$app=new App();
+$app->run(ServerRequest::fromGlobals());
 
+// requete http ->ensemble d'informations qui se etrouvent dans var superglob
+// pas objet car http pas protocole php donc besoin ServeurRequest pour mettre ses infos dans objet
+// on passe ServeurRequest::fromGlobals en para, pour pas etre dependant ce que recoit run va implementer l'interface
 
 // AUTOLOADER MAISON 
 // autoloader->que pr objet, trouver le chemin sans taper tout les include à la main
@@ -28,14 +38,16 @@ require dirname(__DIR__)."/view/header.php";
 
 // aller chercher router
 // pour pas erreur chargement require once
-require_once dirname(__DIR__)."/core/router.php";
+//require_once dirname(__DIR__)."/core/router.php";
 // pour tester le router : http://localhost/loc_car/public/?page=addVehicule
 
 // require dirname(__DIR__)."/core/bdd/BDD.php";
 
-$bdd= BDD::getInstance('localhost', 'loc_car', 'root', '');
-var_dump($bdd->connection);
+// $bdd= BDD::getInstance('localhost', 'loc_car', 'root', '');
+// var_dump($bdd->connection);
 // je peux faire ce que je veux comme avec l'objet PDO
+
+
 ?>
 
 

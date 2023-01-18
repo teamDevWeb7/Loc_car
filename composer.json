@@ -9,7 +9,9 @@
         }
     ],
 
-    "require": {}, 
+    "require": {
+        "guzzlehttp/psr7": "^2.4"
+    }, 
     "autoload":{
         "psr-4":{
             "Core\\":"core/"
