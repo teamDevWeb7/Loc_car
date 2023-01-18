@@ -52,7 +52,7 @@ class BDD{
     }
     // on donne à la fonction getInstance les infos de co, elle va les donner au constructor, construc privé on ne donne pas direct
 
-    // design pattern singleton->prop static qui recup instance et 
+    // design pattern singleton->methode static qui recup instance si existe sinon créé private constructor
 
 }
 
