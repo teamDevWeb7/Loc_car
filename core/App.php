@@ -5,6 +5,7 @@ namespace Core;
 // sur composer on a recup guzzlehttp/psr7
 // copie le lien, colle dans terminal
 
+use Core\Framework\Renderer\PHPRenderer;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use GuzzleHttp\Psr7\Response;
@@ -21,7 +22,12 @@ class App{
                 // renvoie pas reponse pour pas etre dependant de guzzle mais une repsonse qui implemente la response interface
                 // withStatus pour redirection, withheader avec soustraction du /
                 return (new Response())->withStatus(301)->withHeader('Location', substr($uri, 0, -1));
-            }return new Response(200, [], $uri);
+            }
+            $renderer=new PHPRenderer();
+            $path='../view';
+            $renderer->addPath($path);
+            $response=$renderer->render('test', ['name'=>'Cedric']);
+            return new Response(200, [], $response);
         }
 }
 
