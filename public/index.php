@@ -6,12 +6,17 @@ use Core\bdd\BDD;
 // aller chercher ce qu'on a pris sur composer
 use GuzzleHttp\Psr7\ServerRequest;
 use Core\App;
+// on demande de charger fonction pr utiliser le package qui sert à afficher réponse
+use function Http\Response\send;
 
 // tout ça pour avoir un autoload généré automatiquement + chemin parfaits car sur serveur c'est le bordel
 include dirname(__DIR__)."/vendor/autoload.php";
 
 $app=new App();
-$app->run(ServerRequest::fromGlobals());
+// appel methode statique, objet :: methode statique
+$response =$app->run(ServerRequest::fromGlobals());
+// installation interop : va transformer l'objet Reponse en qql chose interpretable par le client (peux pas echo un objet)
+send($response);
 
 // requete http ->ensemble d'informations qui se etrouvent dans var superglob
 // pas objet car http pas protocole php donc besoin ServeurRequest pour mettre ses infos dans objet
@@ -34,7 +39,7 @@ $app->run(ServerRequest::fromGlobals());
 
 // dirname pr chemin 
 // __dir__ pr dossier actuel
-require dirname(__DIR__)."/view/header.php";
+// require dirname(__DIR__)."/view/header.php";
 
 // aller chercher router
 // pour pas erreur chargement require once
@@ -48,12 +53,18 @@ require dirname(__DIR__)."/view/header.php";
 // je peux faire ce que je veux comme avec l'objet PDO
 
 
+
+
+
+
+// pour installer un package, copier coller le lien composer require..... ds terminal
+//pr supprimer, meme lien mais replacer require par remove
 ?>
 
 
 
 
 <?php
-require dirname(__DIR__)."/view/footer.php";
+// require dirname(__DIR__)."/view/footer.php";
 
 ?>

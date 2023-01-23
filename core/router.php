@@ -1,4 +1,5 @@
 <?php
+// recup url de la page
 if(isset($_GET['page'])){
     $page=$_GET['page'];
     switch($page){
