@@ -24,11 +24,18 @@ class App{
                 return (new Response())->withStatus(301)->withHeader('Location', substr($uri, 0, -1));
             }
             $renderer=new PHPRenderer();
-            $path='../view';
-            $renderer->addPath($path);
-            $response=$renderer->render('test', ['name'=>'Cedric']);
+            // $path='../view';
+            // $renderer->addPath($path);
+            // $response=$renderer->render('test', ['name'=>'Cedric']);
+
+            $path="../App/Home/view";
+            // si y a pas le tableau ds render c'es ce qui a ds addGlobale qui s'affiche
+            $renderer->addGlobale('siteName', 'mon site global');
+            $renderer->addPath('Home',$path);
+            $response=$renderer->render('@Home/index', ['siteName'=>'Mon site']);
             return new Response(200, [], $response);
         }
 }
+// namespace=fichiers virtuels pour aider le programme à trouver endroit
 
 ?>

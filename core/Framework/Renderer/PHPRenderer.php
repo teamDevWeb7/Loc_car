@@ -11,6 +11,10 @@ class PHPRenderer implements RendererInterface{
 
     // pr enregistrer mes chemins
     private array $paths=[];
+
+    private array $globals=[];
+
+
     public function addPath(string $namespace, ?string $path=null):void{
         if(is_null ($path)){
             // si path null ca veut dire que enregistré dans namespace
@@ -40,6 +44,7 @@ class PHPRenderer implements RendererInterface{
         }
         // buffering=mettre en pause l'exe du script pr attendre un certain moment pr envoyer resultat
         ob_start();
+        extract($this->globals);
         extract($params);
         require($path);
         return ob_get_clean();
@@ -59,6 +64,10 @@ class PHPRenderer implements RendererInterface{
         // double \ pour echappement 
         return str_replace('/', '\\', $str);
 
+    }
+
+    public function addGlobale(string $key, $value):void{
+        $this->globals[$key]=$value;
     }
 }
 
