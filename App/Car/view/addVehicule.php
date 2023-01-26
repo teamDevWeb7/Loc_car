@@ -1,4 +1,6 @@
-    <!-- a la base form pas faits pour transiter imgs -->
+  <?= $renderer->render('header'); ?>
+  
+  <!-- a la base form pas faits pour transiter imgs -->
 <!-- ajouter enctype pour recup le file de l input file -->
 <form method="POST" action="#" enctype="multipart/form-data">
     <label for="modele">Modèle</label>

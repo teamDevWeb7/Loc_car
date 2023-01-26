@@ -20,6 +20,14 @@ class Router{
         $this->routes[]=$name;
 
     }
+
+    // chemin existe deja en get alors pas besoin de $name
+    public function post(string $path, $callable): void{
+        $this->router->addRoute(new ZendRoute($path, $callable, ['POST']));
+
+    }
+
+
     // s'attend a requte
     public function match(ServerRequestInterface $request):?Route{
 
@@ -32,6 +40,10 @@ class Router{
             );
         }
         return null;
+    }
+
+    public function generateUri(string $nameRoad, ?array $params=[]): ?string{
+        return $this->router->generateUri($nameRoad, $params);
     }
 }
 

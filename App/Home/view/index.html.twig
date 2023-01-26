@@ -1,0 +1,12 @@
+{# <?php
+echo $renderer->render('header');
+echo "Bienvenue sur $siteName"; #}
+{# ?> #}
+
+{% extends 'layout.html.twig' %}
+
+{% block body %}
+<h1>
+Bienvenue sur {{siteName}}
+</h1>
+{% endblock %}

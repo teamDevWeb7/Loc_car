@@ -22,6 +22,7 @@ class App{
     {
         // charger modules et instancier
         $this->router= new Router();
+        $dependencies['renderer']->addGlobale('router', $this->router);
 
         foreach($modules as $module){
             $this->modules[]= new $module($this->router, $dependencies['renderer']);

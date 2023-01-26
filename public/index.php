@@ -13,13 +13,19 @@ use function Http\Response\send;
 
 
 use App\Home\HomeModule;
+use App\Car\CarModule;
+use Core\Framework\Renderer\TwigRenderer;
 
 // tout ça pour avoir un autoload généré automatiquement + chemin parfaits car sur serveur c'est le bordel
 require dirname(__DIR__)."/vendor/autoload.php";
-$renderer= new PHPRenderer(dirname(__DIR__).DIRECTORY_SEPARATOR.'view');
+// $renderer= new PHPRenderer(dirname(__DIR__).DIRECTORY_SEPARATOR.'view');
+$renderer= new TwigRenderer(dirname(__DIR__).DIRECTORY_SEPARATOR.'view');
+
+$renderer->addGlobale('siteName', 'JeVendsDesVoitures.com');
 
 $app=new App([
-    HomeModule::class
+    HomeModule::class,
+    CarModule::class
 ],
 ['renderer'=> $renderer]);
 // appel methode statique, objet :: methode statique

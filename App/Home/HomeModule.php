@@ -20,6 +20,10 @@ class HomeModule{
         $this->renderer->addPath('home', __DIR__.DIRECTORY_SEPARATOR.'view');
 
         // on declare tab vide pck qd appel objet on donne objet et methode
+        // rajouter route en get
+        // 1 url, chemin
+        // 2 function a appelé
+        // 3 nom de la route
         $this->router->get('/', [$this, 'index'], 'accueil');
     }
 
