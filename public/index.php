@@ -6,13 +6,22 @@ use Core\bdd\BDD;
 // aller chercher ce qu'on a pris sur composer
 use GuzzleHttp\Psr7\ServerRequest;
 use Core\App;
+use Core\Framework\Renderer\PHPRenderer;
+
 // on demande de charger fonction pr utiliser le package qui sert à afficher réponse
 use function Http\Response\send;
 
-// tout ça pour avoir un autoload généré automatiquement + chemin parfaits car sur serveur c'est le bordel
-include dirname(__DIR__)."/vendor/autoload.php";
 
-$app=new App();
+use App\Home\HomeModule;
+
+// tout ça pour avoir un autoload généré automatiquement + chemin parfaits car sur serveur c'est le bordel
+require dirname(__DIR__)."/vendor/autoload.php";
+$renderer= new PHPRenderer(dirname(__DIR__).DIRECTORY_SEPARATOR.'view');
+
+$app=new App([
+    HomeModule::class
+],
+['renderer'=> $renderer]);
 // appel methode statique, objet :: methode statique
 $response =$app->run(ServerRequest::fromGlobals());
 // installation interop : va transformer l'objet Reponse en qql chose interpretable par le client (peux pas echo un objet)
