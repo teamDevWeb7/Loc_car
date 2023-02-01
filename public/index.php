@@ -6,7 +6,7 @@ use Core\bdd\BDD;
 // aller chercher ce qu'on a pris sur composer
 use GuzzleHttp\Psr7\ServerRequest;
 use Core\App;
-use Core\Framework\Renderer\PHPRenderer;
+// use Core\Framework\Renderer\PHPRenderer;
 
 // on demande de charger fonction pr utiliser le package qui sert à afficher réponse
 use function Http\Response\send;
@@ -16,18 +16,37 @@ use App\Home\HomeModule;
 use App\Car\CarModule;
 use Core\Framework\Renderer\TwigRenderer;
 
+// objet qui gere des objets
+use DI\ContainerBuilder;
+
 // tout ça pour avoir un autoload généré automatiquement + chemin parfaits car sur serveur c'est le bordel
 require dirname(__DIR__)."/vendor/autoload.php";
 // $renderer= new PHPRenderer(dirname(__DIR__).DIRECTORY_SEPARATOR.'view');
-$renderer= new TwigRenderer(dirname(__DIR__).DIRECTORY_SEPARATOR.'view');
+// $renderer= new TwigRenderer(dirname(__DIR__).DIRECTORY_SEPARATOR.'view');
 
-$renderer->addGlobale('siteName', 'JeVendsDesVoitures.com');
-
-$app=new App([
+$modules = [
     HomeModule::class,
     CarModule::class
-],
-['renderer'=> $renderer]);
+];
+
+// utilisation de php DI
+$builder= new ContainerBuilder();
+// chemin de definitions
+$builder->addDefinitions(dirname(__DIR__).DIRECTORY_SEPARATOR.'config'.DIRECTORY_SEPARATOR.'config.php');
+
+foreach($modules as $module){
+    if(!is_null($module::DEFINITIONS)){
+        $builder->addDefinitions($module::DEFINITIONS);
+    }
+}
+
+
+// plus modifiable une fois que c'est build
+$container=$builder->build();
+
+// $renderer->addGlobale('siteName', 'JeVendsDesVoitures.com');
+
+$app=new App($container, $modules);
 // appel methode statique, objet :: methode statique
 $response =$app->run(ServerRequest::fromGlobals());
 // installation interop : va transformer l'objet Reponse en qql chose interpretable par le client (peux pas echo un objet)

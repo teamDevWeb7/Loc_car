@@ -5,12 +5,13 @@ namespace Core;
 // sur composer on a recup guzzlehttp/psr7
 // copie le lien, colle dans terminal
 
-use Core\Framework\Renderer\PHPRenderer;
+// use Core\Framework\Renderer\PHPRenderer;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use GuzzleHttp\Psr7\Response;
 use Core\Framework\Router\Router;
 use Exception;
+use Psr\Container\ContainerInterface;
 
 class App{
 
@@ -18,15 +19,23 @@ class App{
     // liste modules instanciés
     private array $modules;
 
-    public function __construct(array $modules= [], array $dependencies=[])
+    private ContainerInterface $container;
+
+    public function __construct(ContainerInterface $container, array $modules= [])
     {
         // charger modules et instancier
-        $this->router= new Router();
-        $dependencies['renderer']->addGlobale('router', $this->router);
+        $this->router= $container->get(Router::class);
+        // $dependencies['renderer']->addGlobale('router', $this->router);
+
+        // foreach($modules as $module){
+        //     $this->modules[]= new $module($this->router, $dependencies['renderer']);
+        // }
 
         foreach($modules as $module){
-            $this->modules[]= new $module($this->router, $dependencies['renderer']);
+            $this->modules[]=$container->get($module);
         }
+
+        $this->container=$container;
 
     }
 
@@ -70,6 +79,11 @@ class App{
             // $renderer->addPath('Home',$path);
             // $response=$renderer->render('@Home/index', ['siteName'=>'Mon site']);
             
+        }
+
+
+        public function getContainer():ContainerInterface{
+            return $this->container;
         }
 }
 // namespace=fichiers virtuels pour aider le programme à trouver endroit

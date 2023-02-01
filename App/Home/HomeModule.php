@@ -3,9 +3,13 @@ namespace App\Home;
 
 use Core\Framework\Renderer\RendererInterface;
 use Core\Framework\Router\Router;
+use Core\Framework\AbstractClass\AbstractModule;
 
-class HomeModule{
+class HomeModule extends AbstractModule{
     // renderer interface pck si veut changer renderer apres ça evite modif de cet objet
+
+    // __DIR__ represente dossier actuel
+        public const DEFINITIONS = __DIR__.DIRECTORY_SEPARATOR.'config'.DIRECTORY_SEPARATOR.'config.php';
 
         private Router $router;
         private RendererInterface $renderer;
