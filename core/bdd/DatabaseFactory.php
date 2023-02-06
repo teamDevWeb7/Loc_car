@@ -1,10 +1,19 @@
 <?php
 namespace Core\bdd;
 
+// pr implementer doctrine
+//  doctrine gere model -> bdd
+//  doctrine ds symphony
+//  doc gere requetes pr nous
+//  doc recup toutes infos de ttes les tables reliées à notre request, fait auto inner joints
+
 use Doctrine\DBAL\DriverManager;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\ORMSetup;
 use Psr\Container\ContainerInterface;
+
+
+// config présente sur la doc du fournisseur de bundle
 
 class DatabaseFactory{
     public function __invoke(ContainerInterface $container):?EntityManager{

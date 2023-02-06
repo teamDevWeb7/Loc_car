@@ -34,6 +34,8 @@ $builder= new ContainerBuilder();
 // chemin de definitions
 $builder->addDefinitions(dirname(__DIR__).DIRECTORY_SEPARATOR.'config'.DIRECTORY_SEPARATOR.'config.php');
 
+
+// verif a def et si oui la prend 
 foreach($modules as $module){
     if(!is_null($module::DEFINITIONS)){
         $builder->addDefinitions($module::DEFINITIONS);

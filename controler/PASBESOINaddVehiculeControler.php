@@ -1,3 +1,8 @@
+<!--controler gere la logique, charge vue et la renvoie-->
+
+
+
+
 <!-- deux comportements -->
 <!-- afficher page puis afficher avec modifs -->
 <!-- doit savoir si arrive premiere fois sur page ou si soumet -> POST -->

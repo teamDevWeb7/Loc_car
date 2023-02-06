@@ -19,4 +19,8 @@ return [
     EntityManager::class=>\DI\factory(DatabaseFactory::class)
 ];
 
+// PHP DI objet complet pas besoin réadapter
+//  PHP DI gestionnaire dependences sou sforme tableau PHP
+//  peux use class comme clé et action comme valeur, PHP DI fait tout tout seul
+
 ?>

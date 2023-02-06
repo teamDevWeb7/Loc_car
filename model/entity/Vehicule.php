@@ -4,6 +4,8 @@ namespace Model\Entity;
 
 use Doctrine\ORM\Mapping  as ORM;
 
+// entity regroupe les model des modules
+
 // dire que ce qu'il y a en bas c'est une table, parenthèse car on peut préciser, si nom table !nom objet ca se fait llà
 /**
  * @ORM\Table(name="vehicule)

@@ -20,7 +20,7 @@ class PHPRenderer implements RendererInterface{
         }
     }
     
-
+// donner chemin jusque dossier
     public function addPath(string $namespace, ?string $path=null):void{
         if(is_null ($path)){
             // si path null ca veut dire que enregistré dans namespace
@@ -30,6 +30,7 @@ class PHPRenderer implements RendererInterface{
         }
     }
 
+    // render -> donner chemin jusqu'à fichier
     // maniere dt j'ai l'intention d'call method
     // @blog, namespace blog
     // $renderer->render('@blog/addVehicule')
