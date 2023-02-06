@@ -57,6 +57,17 @@ class App{
                 return new Response(404, [], "<h2>Cette page n'existe pas</h2>");
             }
 
+            $params=$route->getParams();
+
+            // reducteur de tableau, a chq tour du reduc rajoute un param à la requete ->param ds route vont dans requete avant d'aller ds controler
+
+            // reecriture $request, recup clé du tab params
+            // function sera stockée ds $request, $key est la clé qu'on recup de params
+            // decompose params et remet tout bien ds request car $request va partout
+            $request= array_reduce(array_keys($params), function ($request, $key) use ($params){
+                return $request->withAttribute($key, $params[$key]);
+            }, $request);
+
             $response = call_user_func_array($route->getCallback(), [$request]);
 
             if($response instanceof ResponseInterface){

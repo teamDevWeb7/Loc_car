@@ -20,7 +20,7 @@
                 si gestion route par gestion url gars peut acceder au fichier et donc activer fichier malveillant
                 donc pas de lien que html mais passage par routeur -->
                 <li><a href="/">Home</a></li>
-                <li><a href="/addVehicule">Ajouter un vehicule</a></li>
+                <li><a href="{{path('Car.add')}}">Ajouter un vehicule</a></li>
                 {# <li><a href="<?= $router->generateUri('addVehicule') ?>">Add Vehicule</a></li> #}
             </ul>
         </nav>

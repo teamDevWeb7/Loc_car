@@ -4,6 +4,7 @@ use Core\bdd\DatabaseFactory;
 use Core\Framework\Renderer\TwigRendererFactory;
 use Core\Framework\Router\Router;
 use Core\Framework\Renderer\RendererInterface;
+use Core\Framework\Router\RouterTwigExtension;
 use Doctrine\ORM\EntityManager;
 
 return [
@@ -14,6 +15,9 @@ return [
     "doctrine.devMode"=>true,
 
     "config.viewPath"=>dirname(__DIR__).DIRECTORY_SEPARATOR.'view',
+    "twig.extensions"=>[
+        RouterTwigExtension::class
+    ],
     Router::class=>\DI\create(),
     RendererInterface::class=>\DI\factory(TwigRendererFactory::class),
     EntityManager::class=>\DI\factory(DatabaseFactory::class)

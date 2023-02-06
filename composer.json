@@ -15,15 +15,17 @@
         "zendframework/zend-expressive-fastroute": "1.2.0",
         "twig/twig": "^3.5",
         "php-di/php-di": "^6.4",
-        "doctrine/orm": "^2.14",
-        "doctrine/dbal": "^3.5",
+        "doctrine/orm": "^2.13",
+        "doctrine/dbal": "^3.4",
         "doctrine/annotations": "^2.0",
         "symfony/cache": "^5.4"
-    }, 
-    "autoload":{
-        "psr-4":{
-            "Core\\":"core/",
-            "App\\":"App/"
+    },
+    "autoload": {
+        "psr-4": {
+            "Core\\": "core/",
+            "App\\": "App/",
+            "Model\\Entity\\": "model/entity/"
         }
     }
+
 }
