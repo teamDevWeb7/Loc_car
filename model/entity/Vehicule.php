@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping  as ORM;
 
 // dire que ce qu'il y a en bas c'est une table, parenthèse car on peut préciser, si nom table !nom objet ca se fait llà
 /**
- * @ORM\Table(name="vehicule)
+ * @ORM\Table(name="vehicule")
  * @ORM\Entity
  */
 
@@ -46,9 +46,86 @@ class Vehicule{
      */
 
     private string $color;
+
+    /**
+     * Get id.
+     *
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set model.
+     *
+     * @param string $model
+     *
+     * @return Vehicule
+     */
+    public function setModel($model)
+    {
+        $this->model = $model;
+
+        return $this;
+    }
+
+    /**
+     * Get model.
+     *
+     * @return string
+     */
+    public function getModel()
+    {
+        return $this->model;
+    }
+
+    /**
+     * Set marque.
+     *
+     * @param string $marque
+     *
+     * @return Vehicule
+     */
+    public function setMarque($marque)
+    {
+        $this->marque = $marque;
+
+        return $this;
+    }
+
+    /**
+     * Get marque.
+     *
+     * @return string
+     */
+    public function getMarque()
+    {
+        return $this->marque;
+    }
+
+    /**
+     * Set color.
+     *
+     * @param string $color
+     *
+     * @return Vehicule
+     */
+    public function setColor($color)
+    {
+        $this->color = $color;
+
+        return $this;
+    }
+
+    /**
+     * Get color.
+     *
+     * @return string
+     */
+    public function getColor()
+    {
+        return $this->color;
+    }
 }
-
-
-
-
-?>

@@ -23,7 +23,7 @@ class DatabaseFactory{
             "driver"=>$container->get("doctrine.driver"),
             "user"=>$container->get("doctrine.user"),
             "password"=>$container->get("doctrine.mdp"),
-            "bdname"=>$container->get("doctrine.dbname"),
+            "dbname"=>$container->get("doctrine.dbname"),
             "driverOptions"=>[
                 \PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_OBJ
             ]

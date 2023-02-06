@@ -49,10 +49,20 @@ $container=$builder->build();
 // $renderer->addGlobale('siteName', 'JeVendsDesVoitures.com');
 
 $app=new App($container, $modules);
+
+
+// ligne de commande que des trucs en lien
+
+// Command Line Interface
+if(php_sapi_name() !== 'cli'){
 // appel methode statique, objet :: methode statique
 $response =$app->run(ServerRequest::fromGlobals());
 // installation interop : va transformer l'objet Reponse en qql chose interpretable par le client (peux pas echo un objet)
 send($response);
+}
+
+
+
 
 // requete http ->ensemble d'informations qui se etrouvent dans var superglob
 // pas objet car http pas protocole php donc besoin ServeurRequest pour mettre ses infos dans objet
