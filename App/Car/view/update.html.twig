@@ -1,0 +1,36 @@
+{% extends 'layout.html.twig' %}
+
+{% block body %}
+    <h1>Modifier {{voiture.marque}} {{voiture.model}} </h1>
+    <p>Les informations du véhicule à modifier :</p>
+    <table>
+        <thead>
+            <tr>
+                <th>Modèle</th>
+                <th>Marque</th>
+                <th>Couleur</th>
+            </tr>
+        </thead>
+        <tbody>
+                <tr>
+                    <td>{{ voiture.model }}</td>
+                    <td>{{ voiture.marque }}</td>
+                    <td style="width: 25px; height: 25px; background-color: {{ voiture.color }}; ">
+                    </td>
+                </tr>
+        </tbody>
+    </table><br><br>
+    <form action="" method="POST">
+        <label for="marque">Modifier la marque:</label>
+        <input type="text" name="marque" id="marque" value="{{voiture.marque}}"><br>
+        <label for="model">Modifier le modèle:</label>
+        <input type="text" name="model" id="model" value="{{voiture.model}}"><br>
+        <label for="marque">Modifier la couleur:</label>
+        <input name="couleur" type="color" id="color" value="{{voiture.color}}"><br>
+        <input type="submit" value="Modifier">
+
+    </form>
+    
+    
+
+{% endblock %}

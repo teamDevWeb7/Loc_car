@@ -1,0 +1,13 @@
+  {# <?= $renderer->render('header'); ?> #}
+
+  {% extends 'layout.html.twig' %}
+
+  {% block body %}
+  
+<form method="POST" action="#">
+    <label for="name">Nom de la marque:</label>
+    <input name="name" type="text" id="name">
+    <input type="submit" value="Ajouter">
+</form>
+
+{% endblock %}

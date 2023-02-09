@@ -64,6 +64,7 @@ class App{
             // reecriture $request, recup clé du tab params
             // function sera stockée ds $request, $key est la clé qu'on recup de params
             // decompose params et remet tout bien ds request car $request va partout
+            // a chaq tour on recup clé avec reduce et valeur avec with attribute
             $request= array_reduce(array_keys($params), function ($request, $key) use ($params){
                 return $request->withAttribute($key, $params[$key]);
             }, $request);

@@ -10,7 +10,12 @@
     <label for="modele">Modèle</label>
     <input name="modele" type="text" id="modele">
     <label for="marque">Marque</label>
-    <input name="marque" type="text" id="marque">
+    <select name="marque">
+      <option value="null" selected>---</option>
+      {% for marque in marques %}
+        <option value="{{marque.id}}">{{ marque.name}}</option>
+      {% endfor %}
+    </select>
     <label for="couleur">Couleur</label>
     <input name="couleur" type="color" id="color">
     {# <input name="img" id="img" type="file"> #}

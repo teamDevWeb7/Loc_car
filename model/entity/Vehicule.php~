@@ -31,12 +31,14 @@ class Vehicule{
     private string $model;
 
 
+    // on part de vehicule -> a cmb de marques ? many vehicle possédés par one marque
     /**
-     * @ORM\Column(type="string", length="55")
-     * @var string
+     * @ORM\ManyToOne(targetEntity="Marque", inversedBy="vehicules")
+     * @ORM\JoinColumn(name="marque_id", referencedColumnName="id", onDelete="CASCADE")
+     * @var Marque
      */
 
-    private string $marque;
+    private Marque $marque;
 
 
     /**
@@ -46,9 +48,63 @@ class Vehicule{
      */
 
     private string $color;
+
+    /**
+     * Get id.
+     *
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set model.
+     *
+     * @param string $model
+     *
+     * @return Vehicule
+     */
+    public function setModel($model)
+    {
+        $this->model = $model;
+
+        return $this;
+    }
+
+    /**
+     * Get model.
+     *
+     * @return string
+     */
+    public function getModel()
+    {
+        return $this->model;
+    }
+
+
+    /**
+     * Set color.
+     *
+     * @param string $color
+     *
+     * @return Vehicule
+     */
+    public function setColor($color)
+    {
+        $this->color = $color;
+
+        return $this;
+    }
+
+    /**
+     * Get color.
+     *
+     * @return string
+     */
+    public function getColor()
+    {
+        return $this->color;
+    }
 }
-
-
-
-
-?>
