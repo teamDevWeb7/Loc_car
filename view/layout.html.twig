@@ -24,15 +24,20 @@
                 {# <li><a href="<?= $router->generateUri('addVehicule') ?>">Add Vehicule</a></li> #}
                 <li><a href="{{path('marque.add')}}">Ajouter une marque</a></li>
                 <li><a href="{{path('Car.list')}}">Voir tous les véhicules</a></li>
+                <li><a href="{{path('marque.list')}}">Voir toutes les marques</a></li>
             </ul>
         </nav>
     </header>
 
     <main>
+        {% if hasToast() %}
+            {{renderToast()}}
+        {% endif %}
         {% block body %}
         <!-- inserer page ici -->
         {% endblock %}
     </main>
+
 
     <footer>
     <h1>Je suis le footer</h1>

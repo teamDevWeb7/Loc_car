@@ -1,7 +1,7 @@
 {% extends 'layout.html.twig' %}
 
 {% block body %}
-    <h1>Modifier {{voiture.marque}} {{voiture.model}} </h1>
+    <h1>Modifier {{voiture.marque.name}} {{voiture.model}} </h1>
     <p>Les informations du véhicule à modifier :</p>
     <table>
         <thead>
@@ -14,15 +14,23 @@
         <tbody>
                 <tr>
                     <td>{{ voiture.model }}</td>
-                    <td>{{ voiture.marque }}</td>
+                    <td>{{ voiture.marque.name }}</td>
                     <td style="width: 25px; height: 25px; background-color: {{ voiture.color }}; ">
                     </td>
                 </tr>
         </tbody>
     </table><br><br>
     <form action="" method="POST">
-        <label for="marque">Modifier la marque:</label>
-        <input type="text" name="marque" id="marque" value="{{voiture.marque}}"><br>
+        <label for="marque">Modifier la marque</label>
+        <select name="marque">
+          <option value="null">---</option>
+          {% for marque in marques %}
+            {% if marque.id is same as(voiture.marque.id)  %}
+                <option value="{{marque.id}}" selected>{{ marque.name}}</option>
+                {% else %}
+                    <option value="{{marque.id}}">{{ marque.name}}</option>
+            {% endif %}
+          {% endfor %}
         <label for="model">Modifier le modèle:</label>
         <input type="text" name="model" id="model" value="{{voiture.model}}"><br>
         <label for="marque">Modifier la couleur:</label>

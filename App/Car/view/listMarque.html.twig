@@ -1,0 +1,29 @@
+{% extends 'layout.html.twig' %}
+
+{% block body %}
+    <h1>Liste des marques présentent en BDD</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Marque</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for marque in marques %}
+                <tr>
+                    <td>{{ marque.name }}</td>
+                    <td>
+                        {# <a href="{{path('car.update', {id: voiture.id})}}">Modifier</a> #}
+                        <a href="">Supprimer</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+        
+    </table>
+    
+    
+
+{% endblock %}

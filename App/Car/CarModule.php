@@ -8,6 +8,8 @@ use Core\Framework\Router\Router;
 use Psr\Http\Message\ServerRequestInterface;
 use Core\Framework\Renderer\RendererInterface;
 use Core\Framework\AbstractClass\AbstractModule;
+use Core\Session\SessionInterface;
+use Core\toaster\Toaster;
 use GuzzleHttp\Psr7\Response;
 
 class CarModule extends AbstractModule{
@@ -18,12 +20,21 @@ class CarModule extends AbstractModule{
     public const DEFINTIONS =__DIR__.DIRECTORY_SEPARATOR.'config'.DIRECTORY_SEPARATOR.'config.php';
 
     private $marqueRepository;
+    private Toaster $toaster;
+    private SessionInterface $session;
 
-    public function __construct(Router $router, RendererInterface $renderer, EntityManager $manager)
+    public function __construct(
+        Router $router, 
+        RendererInterface $renderer, 
+        EntityManager $manager,
+        SessionInterface $session,
+        Toaster $toaster)
     {
         // manager class qui gere entities, manager va dire à autre class de faire action
         $this->router=$router;
         $this->renderer=$renderer;
+        $this->session=$session;
+        $this->toaster=$toaster;
 
         // getRepo -> va chercher entité (schéma represente table) repo = class qui contient requete possible sur modele
         $this->repository= $manager->getRepository(Vehicule::class);
@@ -41,6 +52,8 @@ class CarModule extends AbstractModule{
 
         $this->router->get('/listCar', [$this, 'listCar'], 'Car.list');
 
+        $this->router->post('/listCar', [$this, 'listCar']);
+
         $this->router->post('/addVehicule', [$this, 'addCar']);
 
         $this->router->get('/infoCar/{id:[\d]+}', [$this, 'infoCar'], 'Car.info');
@@ -55,6 +68,12 @@ class CarModule extends AbstractModule{
         $this->router->get('/addMarque', [$this, 'addMarque'], 'marque.add');
 
         $this->router->post('/addMarque', [$this, 'addMarque']);
+
+        $this->router->get('/marqueList', [$this, 'marqueList'], 'marque.list');
+
+        // $this->router->get('/updateMarque/{id:[\d]+}', [$this, 'updateMarque'], 'marque.update');
+
+        // $this->router->post('/updateMarque/{id:[\d]+}', [$this, 'updateMarque']);
     }
 
     public function addCar(ServerRequestInterface $request){
@@ -62,18 +81,33 @@ class CarModule extends AbstractModule{
 
         if($method === 'POST'){
             $data=$request->getParsedBody();
-            $vehicule = new Vehicule();
+            $voitures=$this->repository->findAll();
             $marque=$this->marqueRepository->find($data['marque']);
-            $vehicule->setModel($data['modele'])
-                        ->setMarque($marque)
-                        ->setColor($data['couleur']);
+            if ($marque){
+                foreach($voitures as $voiture){
+                    if($voiture->getModel()===$data['modele']
+                    &&$voiture->getMarque()===$marque
+                    &&$voiture->getColor()===$data['couleur']){
+                        $this->toaster->makeToast('Cette voiture existe déjà', Toaster::ERROR);
+                        return $this->renderer->render('@Car/list',[
+                            "voitures"=>$voitures
+                        ]);
+                    }
+                }
+                $vehicule = new Vehicule();
+                $vehicule->setModel($data['modele'])
+                ->setMarque($marque)
+                ->setColor($data['couleur']);
 
-            // enregistrer ds bdd = prepare
-            $this->manager->persist($vehicule);
 
-            // flush = execute
-            $this->manager->flush();
+                // enregistrer ds bdd = prepare
+                $this->manager->persist($vehicule);
 
+                // flush = execute
+                $this->manager->flush();
+            }
+
+            $this->toaster->makeToast('Voiture créée avec succès', Toaster::SUCCESS);
             return (new Response)
                 ->withHeader('Location', '/listCar');
         }
@@ -85,7 +119,7 @@ class CarModule extends AbstractModule{
 
     // avoir liste voitures ajoutées
     public function listCar(ServerRequestInterface $request): string{
-        $voitures= $this ->repository->findAll();
+        $voitures= $this->repository->findAll();
         return $this->renderer->render('@Car/list', [
             "voitures"=>$voitures
         ]);
@@ -109,9 +143,9 @@ class CarModule extends AbstractModule{
         if($method === 'POST'){
             // recup tout ce qui a ete envoyé par methode post
             $data=$request->getParsedBody();
-
+            $marque=$this->marqueRepository->find($data['marque']);
             $vehicule->setModel($data['model'])
-                        ->setMarque($data['marque'])
+                        ->setMarque($marque)
                         ->setColor($data['couleur']);
 
 
@@ -123,7 +157,9 @@ class CarModule extends AbstractModule{
                 ->withHeader('Location', '/listCar');
         }
 
-        return $this->renderer->render('@Car/update', ["voiture"=>$vehicule]);
+        $marques=$this->marqueRepository->findAll();
+
+        return $this->renderer->render('@Car/update', ["voiture"=>$vehicule, 'marques'=>$marques]);
     }
 
 
@@ -134,6 +170,8 @@ class CarModule extends AbstractModule{
         $this->manager->remove($vehicule);
 
         $this->manager->flush();
+
+        $this->toaster->makeToast('Voiture supprimée avec succès', Toaster::SUCCESS);
 
         return (new Response)
                 ->withHeader('Location', '/listCar');
@@ -150,6 +188,7 @@ class CarModule extends AbstractModule{
 
             foreach($marques as $marque){
                 if($marque->getName()===$data['name']){
+                    $this->toaster->makeToast('Cette marque existe déjà', Toaster::ERROR);
                     return $this->renderer->render('@Car/addMarque');
                 }
             }
@@ -164,11 +203,49 @@ class CarModule extends AbstractModule{
             // flush = execute
             $this->manager->flush();
 
+            $this->toaster->makeToast('Marque créée avec succès', Toaster::SUCCESS);
+
             return (new Response)
                 ->withHeader('Location', '/listCar');
         }
         return $this->renderer->render('@Car/addMarque');
     }
+
+
+    public function marqueList(ServerRequestInterface $request){
+        $marques=$this->marqueRepository->findAll();
+        return $this->renderer->render('@Car/listMarque', ['marques'=>$marques]);
+    }
+
+
+    // public function updateMarque(ServerRequestInterface $request){
+        // $method= $request->getMethod();
+        // $id=$request->getAttribute('id');
+        // $vehicule= $this->repository->find($id);
+
+        // if($method === 'POST'){
+        //     // recup tout ce qui a ete envoyé par methode post
+        //     $data=$request->getParsedBody();
+        //     $marque=$this->marqueRepository->find($data['marque']);
+        //     $vehicule->setModel($data['model'])
+        //                 ->setMarque($marque)
+        //                 ->setColor($data['couleur']);
+
+
+
+        //     // flush = execute
+        //     $this->manager->flush();
+
+        //     return (new Response)
+        //         ->withHeader('Location', '/listCar');
+        // }
+
+        // $marques=$this->marqueRepository->findAll();
+
+        // return $this->renderer->render('@Car/update', ["voiture"=>$vehicule, 'marques'=>$marques]);
+
+
+    // }
 
 
 }
