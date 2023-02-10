@@ -83,34 +83,26 @@ class MarqueAction{
      * @param ServerRequestInterface $request
      * @return void
      */
-    // public function updateMarque(ServerRequestInterface $request){
-        // $method= $request->getMethod();
-        // $id=$request->getAttribute('id');
-        // $vehicule= $this->repository->find($id);
+    public function updateMarque(ServerRequestInterface $request){
+        $method= $request->getMethod();
+        $id=$request->getAttribute('id');
+        $marque= $this->marqueRepository->find($id);
 
-        // if($method === 'POST'){
-        //     // recup tout ce qui a ete envoyé par methode post
-        //     $data=$request->getParsedBody();
-        //     $marque=$this->marqueRepository->find($data['marque']);
-        //     $vehicule->setModel($data['model'])
-        //                 ->setMarque($marque)
-        //                 ->setColor($data['couleur']);
+        if($method === 'POST'){
+            // je ne recupere pas ce qu'il y a dans l'input -> me dit que name est null
+            $donnee=$request->getParsedBody();
+            $marque->setName($donnee['name']);
 
+            $this->manager->flush();
 
+            $this->toaster->makeToast('Marque modifiée avec succès', Toaster::SUCCESS);
 
-        //     // flush = execute
-        //     $this->manager->flush();
+            return (new Response)
+                ->withHeader('Location', '/marqueList');
+        }
 
-        //     return (new Response)
-        //         ->withHeader('Location', '/listCar');
-        // }
-
-        // $marques=$this->marqueRepository->findAll();
-
-        // return $this->renderer->render('@Car/update', ["voiture"=>$vehicule, 'marques'=>$marques]);
-
-
-    // }
+        return $this->renderer->render('@Car/updateMarque');
+    }
 
 
     /**

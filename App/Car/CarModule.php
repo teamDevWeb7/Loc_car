@@ -80,9 +80,9 @@ class CarModule extends AbstractModule{
 
         // $this->router->get('/update/{id:[\d]+}', [$carAction, 'update'], 'car.update');
 
-        // $this->router->get('/updateMarque/{id:[\d]+}', [$this, 'updateMarque'], 'marque.update');
+        $this->router->get('/updateMarque/{id:[\d]+}', [$marqueAction, 'updateMarque'], 'marque.updateMarque');
 
-        // $this->router->post('/updateMarque/{id:[\d]+}', [$this, 'updateMarque']);
+        $this->router->post('/updateMarque/{id:[\d]+}', [$marqueAction, 'updateMarque']);
     }
 
 

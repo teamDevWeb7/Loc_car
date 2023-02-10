@@ -1,0 +1,14 @@
+{% extends 'layout.html.twig' %}
+
+{% block body %}
+    <h1>Modifier la marque {{marque.name}} </h1>
+    <form action="" method="POST">
+        <label for="model">Modifier le modèle:</label>
+        <input type="text" name="model" id="model" value="{{marque.name}}"><br>
+        <input type="submit" value="Modifier">
+
+    </form>
+    
+    
+
+{% endblock %}
