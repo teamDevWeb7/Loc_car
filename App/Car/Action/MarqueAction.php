@@ -6,6 +6,7 @@ use Core\toaster\Toaster;
 // use Model\Entity\Vehicule;
 use GuzzleHttp\Psr7\Response;
 use Doctrine\ORM\EntityManager;
+use Core\Framework\Validator\Validator;
 use Psr\Http\Message\ServerRequestInterface;
 use Core\Framework\Renderer\RendererInterface;
 
@@ -38,6 +39,17 @@ class MarqueAction{
 
         if($method === 'POST'){
             $data=$request->getParsedBody();
+
+            $validator=new Validator ($data);
+            $errors=$validator->required('name')->getErrors();
+            if($errors){
+                foreach($errors as $error){
+                    $this->toaster->makeToast($error->toString(), Toaster::ERROR);
+                }
+                return(new Response())
+                                    ->withHeader('Location', '/addMarque');
+            }
+
 
             $marques= $this->marqueRepository->findAll();
 

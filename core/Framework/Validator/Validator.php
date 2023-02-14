@@ -1,6 +1,15 @@
 <?php
 // valider données ex tel champs requis etc
 
+
+// ce qu'on recup du form dans une var(data)-> $validator=new Validator (data)
+// on crée une var erreur -> sur la var $validator on use sa méthode required
+// ->required= a chaque clé du tab on verif qu'elle soit remplie
+// si une clé pas remplie on use la méthode add Error qui avec le Validator Erreur genere un mess d'aerreur en string
+// apres required on ->getErrors renvoie True ou False
+// si False on continue le script
+//si True on use la methode du Validator error pour afficher le champs manquant
+
 namespace Core\Framework\Validator;
 
 class Validator{
