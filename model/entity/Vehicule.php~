@@ -50,6 +50,13 @@ class Vehicule{
     private string $color;
 
     /**
+     * @ORM\Column(type="string", name="img_path")
+     *
+     * @var string
+     */
+    private string $imgPath;
+
+    /**
      * Get id.
      *
      * @return int

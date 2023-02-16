@@ -50,6 +50,13 @@ class Vehicule{
     private string $color;
 
     /**
+     * @ORM\Column(type="string", name="img_path")
+     *
+     * @var string
+     */
+    private string $imgPath;
+
+    /**
      * Get id.
      *
      * @return int
@@ -130,5 +137,29 @@ class Vehicule{
     public function getMarque()
     {
         return $this->marque;
+    }
+
+    /**
+     * Set imgPath.
+     *
+     * @param string $imgPath
+     *
+     * @return Vehicule
+     */
+    public function setImgPath($imgPath)
+    {
+        $this->imgPath = $imgPath;
+
+        return $this;
+    }
+
+    /**
+     * Get imgPath.
+     *
+     * @return string
+     */
+    public function getImgPath()
+    {
+        return $this->imgPath;
     }
 }
