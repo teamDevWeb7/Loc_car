@@ -13,13 +13,16 @@ use App\Home\HomeModule;
 
 
 use DI\ContainerBuilder;
+use App\Admin\AdminModule;
+use Core\Framework\Middleware\AdminAuthMiddleware;
+
 use function Http\Response\send;
 use GuzzleHttp\Psr7\ServerRequest;
 use Core\Framework\Renderer\TwigRenderer;
 use Core\Framework\Middleware\RouterMiddleware;
-use Core\Framework\Middleware\NotFoundMiddleware;
 
 // objet qui gere des objets
+use Core\Framework\Middleware\NotFoundMiddleware;
 use Core\Framework\Middleware\TrailingSlashMiddleware;
 use Core\Framework\Middleware\RouterDispatcherMiddleware;
 
@@ -28,7 +31,8 @@ require dirname(__DIR__)."/vendor/autoload.php";
 
 $modules = [
     HomeModule::class,
-    CarModule::class
+    CarModule::class,
+    AdminModule::class
 ];
 
 // utilisation de php DI
@@ -54,6 +58,7 @@ $app=new App($container, $modules);
 
 $app->linkFirst(new TrailingSlashMiddleware())
     ->linkWith(new RouterMiddleware($container))
+    ->linkWith(new AdminAuthMiddleware($container))
     ->linkWith(new RouterDispatcherMiddleware())
     ->linkWith(new NotFoundMiddleware());
 

@@ -4,10 +4,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- raccourci pour php echo -->
     <title>{{siteName}}</title>
     {% block stylesheet %}
-    {# lier css ex ds infoCar.html.css ds Car et view #}
     {% endblock %}
 </head>
 <body>
@@ -15,12 +13,13 @@
     <header>
         <nav>
             <ul>
-                <!-- faille include peut faire passer script pour img par exemple
-                choses malveillantes peuvent etre dans code
-                si gestion route par gestion url gars peut acceder au fichier et donc activer fichier malveillant
-                donc pas de lien que html mais passage par routeur -->
-                <li><a href="/">Home</a></li>
-
+                <li><a href="{{path('admin.home')}}">Home</a></li>
+                <li><a href="{{path('Car.add')}}">Ajouter un vehicule</a></li>
+                {# <li><a href="<?= $router->generateUri('addVehicule') ?>">Add Vehicule</a></li> #}
+                <li><a href="{{path('marque.add')}}">Ajouter une marque</a></li>
+                <li><a href="{{path('Car.list')}}">Voir tous les véhicules</a></li>
+                <li><a href="{{path('marque.list')}}">Voir toutes les marques</a></li>
+                <li><a href="{{path('admin.logout')}}">Déconnexion</a></li>
             </ul>
         </nav>
     </header>

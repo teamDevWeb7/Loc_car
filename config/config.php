@@ -5,6 +5,7 @@ use Core\Framework\Renderer\TwigRendererFactory;
 use Core\Framework\Router\Router;
 use Core\Framework\Renderer\RendererInterface;
 use Core\Framework\Router\RouterTwigExtension;
+use Core\Framework\TwigExtensions\AssetsTwigExtension;
 use Core\Session\PHPSession;
 use Doctrine\ORM\EntityManager;
 use Core\Session\SessionInterface;
@@ -21,7 +22,8 @@ return [
     "config.viewPath"=>dirname(__DIR__).DIRECTORY_SEPARATOR.'view',
     "twig.extensions"=>[
         RouterTwigExtension::class,
-        ToasterTwigExtension::class
+        ToasterTwigExtension::class,
+        AssetsTwigExtension::class
     ],
     Router::class=>\DI\create(),
     RendererInterface::class=>\DI\factory(TwigRendererFactory::class),

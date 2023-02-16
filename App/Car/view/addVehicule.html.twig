@@ -2,6 +2,10 @@
 
   {% extends 'layout.html.twig' %}
 
+  {% block stylesheet %}
+      <link rel="stylesheet" href="{{ assets('assets/css/style.css') }}">
+  {% endblock %}
+
   {% block body %}
   
   <!-- a la base form pas faits pour transiter imgs -->
@@ -18,7 +22,7 @@
     </select>
     <label for="couleur">Couleur</label>
     <input name="couleur" type="color" id="color">
-    {# <input name="img" id="img" type="file"> #}
+    <input name="img" id="img" type="file">
     <input type="submit" value="Ajouter">
 </form>
 
