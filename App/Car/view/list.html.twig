@@ -9,6 +9,7 @@
                 <th>Modèle</th>
                 <th>Marque</th>
                 <th>Couleur</th>
+                <th>Img</th>
                 <th>Action</th>
             </tr>
         </thead>
@@ -18,6 +19,9 @@
                     <td>{{ voiture.model }}</td>
                     <td>{{ voiture.marque.name }}</td>
                     <td style="width: 25px; height: 25px; background-color: {{ voiture.color }}; ">
+                    </td>
+                    <td>
+                        <img src="{{assets('/assets/imgs/'~voiture.imgPath) }}" style="width: 50px">
                     </td>
                     <td>
                         <a href="{{path('car.update', {id: voiture.id})}}">Modifier</a>

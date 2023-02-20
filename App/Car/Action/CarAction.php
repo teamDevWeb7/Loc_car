@@ -87,7 +87,7 @@ class CarAction{
                 $vehicule->setModel($data['modele'])
                 ->setMarque($marque)
                 ->setColor($data['couleur'])
-                ->setImgPath($imgPath);
+                ->setImgPath($fileName);
 
 
                 // enregistrer ds bdd = prepare
@@ -154,6 +154,26 @@ class CarAction{
                 // recup tout ce qui a ete envoyé par methode post
                 $data=$request->getParsedBody();
                 $marque=$this->marqueRepository->find($data['marque']);
+                $file=$request->getUploadedFiles();
+          
+                if(sizeof($file)>0 && $file['img']->getError() !==4){
+
+                    $vieillePhoto=$vehicule->getImgPath();
+                    $newImg=$file['img'];
+                    $fileName=$newImg->getClientFileName();
+                    $imgPathNew=dirname(__DIR__, 3).DIRECTORY_SEPARATOR.'public'. DIRECTORY_SEPARATOR. 'assets' . DIRECTORY_SEPARATOR.'imgs'. DIRECTORY_SEPARATOR.$fileName;
+                    $this->fileGuard($newImg);
+                    $newImg->moveTo($imgPathNew);
+                    if($newImg->isMoved()){
+                        $vehicule->setImgPath($fileName);
+                        $oldPath=dirname(__DIR__, 3).DIRECTORY_SEPARATOR.'public'. DIRECTORY_SEPARATOR. 'assets' . DIRECTORY_SEPARATOR.'imgs'. DIRECTORY_SEPARATOR.$vieillePhoto;
+
+                        unlink($oldPath);
+                    }
+                }
+
+
+                
                 $vehicule->setModel($data['model'])
                             ->setMarque($marque)
                             ->setColor($data['couleur']);

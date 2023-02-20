@@ -17,10 +17,13 @@
                     <td>{{ voiture.marque.name }}</td>
                     <td style="width: 25px; height: 25px; background-color: {{ voiture.color }}; ">
                     </td>
+                    <td>
+                        <img src="{{assets('/assets/imgs/'~voiture.imgPath) }}" style="width: 50px">
+                    </td>
                 </tr>
         </tbody>
     </table><br><br>
-    <form action="" method="POST">
+    <form action="" method="POST" enctype="multipart/form-data">
         <label for="marque">Modifier la marque</label>
         <select name="marque">
           <option value="null">---</option>
@@ -35,6 +38,8 @@
         <input type="text" name="model" id="model" value="{{voiture.model}}"><br>
         <label for="marque">Modifier la couleur:</label>
         <input name="couleur" type="color" id="color" value="{{voiture.color}}"><br>
+        <label for="img">Modifier l'image:</label>
+        <input name="img" type="file" id="img"><br>
         <input type="submit" value="Modifier">
 
     </form>
