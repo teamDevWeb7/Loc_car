@@ -10,6 +10,7 @@ use Core\Framework\Validator\Validator;
 use Psr\Http\Message\ServerRequestInterface;
 use Core\Framework\Renderer\RendererInterface;
 use GuzzleHttp\Psr7\UploadedFile;
+use Psr\Container\ContainerInterface;
 
 class CarAction{
     // déclaration
@@ -18,12 +19,14 @@ class CarAction{
     private Toaster $toaster;
     private $marqueRepository;
     private $repository;
+    private ContainerInterface $container;
 
     // injection de dépendences
-    public function __construct(RendererInterface $renderer, EntityManager $manager, Toaster $toaster)
+    public function __construct(RendererInterface $renderer, EntityManager $manager, Toaster $toaster, ContainerInterface $container)
     {
         // assignation valeurs
         $this->renderer=$renderer;
+        $this->container=$container;
         $this->manager=$manager;
         $this->toaster=$toaster;
         $this->marqueRepository=$manager->getRepository(Marque::class);
@@ -73,7 +76,7 @@ class CarAction{
                 // 2eme partie img
                 $this->fileGuard($file);
                 $fileName=$file->getClientFileName();
-                $imgPath=dirname(__DIR__, 3).DIRECTORY_SEPARATOR.'public'. DIRECTORY_SEPARATOR. 'assets' . DIRECTORY_SEPARATOR.'imgs'. DIRECTORY_SEPARATOR.$fileName;
+                $imgPath=$this->container->get('img.basePath').$fileName;
                 $file->moveTo($imgPath);
                 if(!$file->isMoved()){
                     // on check si a bougé car que 
@@ -166,7 +169,9 @@ class CarAction{
                     $newImg->moveTo($imgPathNew);
                     if($newImg->isMoved()){
                         $vehicule->setImgPath($fileName);
-                        $oldPath=dirname(__DIR__, 3).DIRECTORY_SEPARATOR.'public'. DIRECTORY_SEPARATOR. 'assets' . DIRECTORY_SEPARATOR.'imgs'. DIRECTORY_SEPARATOR.$vieillePhoto;
+                        $oldPath=$this->container->get('img.basePath').$vieillePhoto;
+                        // la methode get du container fonctionne avec php DI
+                        // on use la clé pr remplacer le chemin
 
                         unlink($oldPath);
                     }
