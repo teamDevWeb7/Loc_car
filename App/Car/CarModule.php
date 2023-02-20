@@ -27,7 +27,7 @@ class CarModule extends AbstractModule{
     private RendererInterface $renderer;
     // private $repository;
     // private EntityManager $manager;
-    public const DEFINTIONS =__DIR__.DIRECTORY_SEPARATOR.'config'.DIRECTORY_SEPARATOR.'config.php';
+    public const DEFINITIONS =__DIR__.DIRECTORY_SEPARATOR.'config'.DIRECTORY_SEPARATOR.'config.php';
 
     // private $marqueRepository;
     // private Toaster $toaster;
