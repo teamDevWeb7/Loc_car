@@ -11,16 +11,16 @@
 {% block body %}
     <div class="userFormViewPort">
         <button type="button" onclick="slider('connection')">Connection</button>
-        <button type="button" onclick="slider('inscription')"">Inscription</button>
+        <button type="button" onclick="slider('inscription')">Inscription</button>
 
         <div id="FormContainer" style="display:flex">
 
         {# connexion #}
-        <form method="POST" id="FormConn">
-            <label for="conn_email">Adresse Email : </label>
-            <input type="email" id="conn_email" name="conn_email"><br>
-            <label for="conn_mdp">Mot de passe : </label>
-            <input type="password" id="conn_mdp" name="conn_mdp"><br>
+        <form method="POST" id="FormConn" action="{{path('user.connexion')}}">
+            <label for="mail">Adresse Email : </label>
+            <input type="mail" id="mail" name="mail"><br>
+            <label for="mdp">Mot de passe : </label>
+            <input type="password" id="mdp" name="mdp"><br>
             <input type="submit" value="Se connecter" style="margin-top: 10px">
     
         </form>

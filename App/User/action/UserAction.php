@@ -13,6 +13,7 @@ use Psr\Container\ContainerInterface;
 use Core\Framework\Validator\Validator;
 use Core\Framework\Router\RedirectTrait;
 use Core\Framework\Renderer\RendererInterface;
+use Core\Session\SessionInterface;
 
 class UserAction{
 
@@ -23,6 +24,7 @@ class UserAction{
     private Toaster $toaster;
     private Router $router;
     private EntityRepository $repository;
+    private SessionInterface $session;
 
     public function __construct(ContainerInterface $container){
         $this->container=$container;
@@ -30,6 +32,7 @@ class UserAction{
         $this->toaster=$container->get(Toaster::class);
         $this->router=$container->get(Router::class);
         $this->repository=$container->get(EntityManager::class)->getRepository(User::class);
+        $this->session=$container->get(SessionInterface::class);
     }
 
     public function logView(ServerRequest $request){
@@ -57,7 +60,7 @@ class UserAction{
             'nom'=>$data['ins_nom'],
             'prenom'=>$data['ins_prenom'],
             'mail'=>$data['ins_email'],
-            
+            'mdp' => $data['ins_mdp']
         ];
         $result=$auth->signIn($form);
         if($result !== true){
@@ -65,5 +68,37 @@ class UserAction{
         }
         $this->toaster->makeToast("Inscription reussie, vous pouvez vous connecter", Toaster::SUCCESS);
         return $this->redirect('user.login');
+    }
+
+    public function login(ServerRequest $request){
+        $data=$request->getParsedBody();
+        $validator=new Validator($data);
+        $errors=$validator
+                        ->required('mail', 'mdp')
+                        ->email('mail')
+                        ->getErrors();
+
+        if($errors){
+            foreach($errors as $error){
+                $this->toaster->makeToast($error->toString(), Toaster::ERROR);
+            }
+            return $this->redirect('user.login');
+        }
+        $auth=$this->container->get(UserAuth::class);
+        $res=$auth->login($data['mail'], $data['mdp']);
+        if($res== true){
+            $this->toaster->makeToast('Connexion reussie', Toaster::SUCCESS);
+            return $this->redirect('user.home');
+        }
+        $this->toaster->makeToast("Connexion échouée, vérifiez vos informations", Toaster::ERROR);
+        return $this->redirect('user.login');
+    }
+
+    public function home(ServerRequest $request){
+        // render une vue !== rediriger
+        $user=$this->session->get('auth');
+        return $this->renderer->render('@user/home', [
+            'user'=>$user
+        ]);
     }
 }
