@@ -35,7 +35,11 @@ class UserAction{
         $auth=$this->container->get(UserAuth::class);
         $data=$request->getParsedBody();
         $validator=new Validator($data);
-        $errors=$validator->required('ins_nom', 'ins_prenom','ins_email', 'ins_mdp', 'cmdp')->getErrors();
+        $errors=$validator->required('ins_nom', 'ins_prenom','ins_email', 'ins_mdp', 'ins_mdp_confirme')
+                            ->email('ins_email')
+                            ->strSize('ins-mdp', 12, 50)
+                            ->confirme('mdp')
+                            ->getErrors();
         if($errors){
             foreach($errors as $error){
                 $this->toaster->makeToast($error->toString(), Toaster::ERROR);

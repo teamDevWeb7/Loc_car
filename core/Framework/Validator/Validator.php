@@ -38,6 +38,45 @@ class Validator{
         return $this;
     }
 
+    public function email(string $key):self{
+        if(!filter_var($this->data[$key], FILTER_VALIDATE_EMAIL)){
+            // si rentre ds condition c pas un email
+            $this->addError($key, 'email');
+        }
+        return $this;
+    }
+
+    public function strSize(string $key, int $min, int $max):self{
+        if(!array_key_exists($key, $this->data)){
+            return $this;
+            // si cle existe pas ds tab on return this
+        }
+        $length=mb_strlen($this->data[$key]);
+        if($length < $min){
+            $this->addError($key, 'strMin');
+        }
+        if($length > $max){
+            $this->addError($key, 'strMax');
+        }
+        return $this;
+    }
+
+    // 
+    public function confirme(string $key):self{
+        $confirme=$key . '_confirme';
+        if(!array_key_exists($key, $this->data)){
+            return $this;
+        }
+        if(!array_key_exists($confirme, $this->data)){
+            return $this;
+        }
+        if($this->data[$key] !== $this->data[$confirme]){
+            $this->addError($key, 'confirme');
+        }
+        
+        return $this;
+    }
+
     /**
      * enregistre ds tab les erreurs, fonctionne avec le ValidatorError
      *
