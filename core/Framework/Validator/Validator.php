@@ -12,6 +12,8 @@
 
 namespace Core\Framework\Validator;
 
+use Doctrine\ORM\EntityRepository;
+
 class Validator{
     private array $data;
     private array $errors;
@@ -74,6 +76,20 @@ class Validator{
             $this->addError($key, 'confirme');
         }
         
+        return $this;
+    }
+
+    public function isUnique(string $key, EntityRepository $repo, string $field='nom'):self{
+        $all=$repo->findAll();
+        $method='get'.ucfirst($field);
+        foreach($all as $item){
+            // verif insensible a la casse
+            if(strcasecmp($item->$method(), $this->data[$key])===0){
+                $this->addError($key, 'unique');
+                break;
+            }
+        }
+
         return $this;
     }
 

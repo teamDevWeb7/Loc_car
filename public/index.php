@@ -26,6 +26,7 @@ use Core\Framework\Middleware\NotFoundMiddleware;
 use Core\Framework\Middleware\AdminAuthMiddleware;
 use Core\Framework\Middleware\TrailingSlashMiddleware;
 use Core\Framework\Middleware\RouterDispatcherMiddleware;
+use Core\Framework\Middleware\UserAuthMiddleware;
 
 require dirname(__DIR__)."/vendor/autoload.php";
 
@@ -61,6 +62,7 @@ $app=new App($container, $modules);
 $app->linkFirst(new TrailingSlashMiddleware())
     ->linkWith(new RouterMiddleware($container))
     ->linkWith(new AdminAuthMiddleware($container))
+    ->linkWith(new UserAuthMiddleware($container))
     ->linkWith(new RouterDispatcherMiddleware())
     ->linkWith(new NotFoundMiddleware());
 

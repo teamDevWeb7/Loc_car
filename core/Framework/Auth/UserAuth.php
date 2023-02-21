@@ -3,6 +3,7 @@ namespace Core\Framework\Auth;
 
 use Core\Framework\Router\RedirectTrait;
 use Core\Framework\Router\Router;
+use Core\Session\SessionInterface;
 use Core\toaster\Toaster;
 use Model\Entity\User;
 use Doctrine\ORM\EntityManager;
@@ -15,6 +16,7 @@ class UserAuth{
     private EntityManager $manager;
     private Toaster $toaster;
     private Router $router;
+    private SessionInterface $session;
 
     public function __construct(ContainerInterface $container){
 
@@ -22,6 +24,7 @@ class UserAuth{
         $this->manager=$container->get(EntityManager::class);
         $this->toaster=$container->get(Toaster::class);
         $this->router=$container->get(Router::class);
+        $this->session=$container->get(SessionInterface::class);
     }
 
     public function signIn(array $data){
@@ -39,4 +42,19 @@ class UserAuth{
             return $this->redirect(('user.login'));
         }
     }
+
+    public function isLogged():bool{
+        // verif si user connecté
+        return $this->session->has('auth');
+    }
+
+    public function isUser():bool{
+        if($this->isLogged()){
+            // instance of permet savoir si instance de le entité user
+            return $this->session->get('auth') instanceof User;
+        }
+        return false;
+    }
+    // use de la meme clé dans la session permet de ne pas pouvoir se co en meme temps en tant que user et admin
+    // ++++sécu
 }
