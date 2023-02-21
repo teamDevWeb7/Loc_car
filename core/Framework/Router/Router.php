@@ -22,8 +22,8 @@ class Router{
     }
 
     // chemin existe deja en get alors pas besoin de $name
-    public function post(string $path, $callable): void{
-        $this->router->addRoute(new ZendRoute($path, $callable, ['POST']));
+    public function post(string $path, $callable, string $name=null): void{
+        $this->router->addRoute(new ZendRoute($path, $callable, ['POST'], $name));
 
     }
 

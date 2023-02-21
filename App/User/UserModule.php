@@ -27,5 +27,6 @@ class UserModule extends AbstractModule{
 
 
         $this->router->get('/login', [$userAction, 'logView'], 'user.login');
+        $this->router->post('/newUser', [$userAction, 'signin'], 'user.new');
     }
 }

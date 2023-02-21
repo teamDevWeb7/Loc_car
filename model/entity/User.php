@@ -156,4 +156,19 @@ class User{
     {
         return $this->password;
     }
+
+
+
+    public function hydrate(array $data): self{
+
+        // permet mettre infos à chaq nv inscript
+        foreach($data as $key => $value){
+            $method='set'.ucfirst($key);
+            if(method_exists($this, $method)){
+                $this->$method($value);
+            }
+        }
+
+        return $this;
+    }
 }
