@@ -1,0 +1,44 @@
+main{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    /* dynamique, prend en compte les autres elements */
+    min-height: 100dvh;
+    min-width: 90dvw;
+}
+
+.userFormViewPort{
+    min-width: 450px;
+    height: fit-content;
+    overflow: hidden;
+    border: solid black 1px;
+    border-radius: 15px;
+    padding: 15px;
+}
+
+#FormContainer{
+    width: 100%;
+    position: relative;
+    height: 400px;
+}
+
+#FormContainer form{
+    width: 450px;
+    position: absolute;
+    transition: .5s all ease-in-out;
+}
+
+#FormConn{
+    top: 0;
+    left: 0;
+}
+
+#FormIns{
+    top: 0;
+    left: 110%;
+}
+
+input{
+    margin: 5px 0;
+}

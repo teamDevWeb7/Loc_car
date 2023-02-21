@@ -12,9 +12,9 @@ use App\Car\CarModule;
 use App\Home\HomeModule;
 
 
+use App\User\UserModule;
 use DI\ContainerBuilder;
 use App\Admin\AdminModule;
-use Core\Framework\Middleware\AdminAuthMiddleware;
 
 use function Http\Response\send;
 use GuzzleHttp\Psr7\ServerRequest;
@@ -23,6 +23,7 @@ use Core\Framework\Middleware\RouterMiddleware;
 
 // objet qui gere des objets
 use Core\Framework\Middleware\NotFoundMiddleware;
+use Core\Framework\Middleware\AdminAuthMiddleware;
 use Core\Framework\Middleware\TrailingSlashMiddleware;
 use Core\Framework\Middleware\RouterDispatcherMiddleware;
 
@@ -32,7 +33,8 @@ require dirname(__DIR__)."/vendor/autoload.php";
 $modules = [
     HomeModule::class,
     CarModule::class,
-    AdminModule::class
+    AdminModule::class,
+    UserModule::class
 ];
 
 // utilisation de php DI

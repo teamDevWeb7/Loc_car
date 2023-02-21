@@ -1,0 +1,53 @@
+{% extends 'layout.html.twig' %}
+
+{% block stylesheet %}
+<link rel="stylesheet" href="{{assets('assets/css/userForm.css')}}">
+{% endblock %}
+
+{% block scripts %}
+    <script src="{{assets('/assets/js/formSlider.js')}}"></script>
+{% endblock %}
+
+{% block body %}
+    <div class="userFormViewPort">
+        <button type="button" onclick="slider('connection')">Connection</button>
+        <button type="button" onclick="slider('inscription')"">Inscription</button>
+
+        <div id="FormContainer" style="display:flex">
+
+        {# connexion #}
+        <form method="POST" id="FormConn">
+            <label for="conn_email">Adresse Email : </label>
+            <input type="email" id="conn_email" name="conn_email"><br>
+            <label for="conn_mdp">Mot de passe : </label>
+            <input type="password" id="conn_mdp" name="conn_mdp"><br>
+            <input type="submit" value="Se connecter" style="margin-top: 10px">
+    
+        </form>
+
+
+        {# inscription #}
+        <form method="POST"  id="FormIns">
+            <label for="ins_nom">Nom : </label>
+            <input type="text" id="ins_nom" name="ins_nom"><br>
+            <label for="ins_prenom">Prénom : </label>
+            <input type="text" id="ins_prenom" name="ins_prenom"><br>
+            <label for="ins_email">Adresse Email : </label>
+            <input type="ins_email" id="ins_email" name="ins_email"><br>
+            <label for="ins_mdp">Mot de passe : </label>
+            <input type="password" id="ins_mdp" name="ins_mdp"><br>
+            <label for="cmdp">Confirmation du mot de passe : </label>
+            <input type="password" id="cmdp" name="cmdp"><br>
+            <input type="submit" value="Se connecter" style="margin-top: 10px">
+    
+        </form>
+
+        </div>
+
+
+    </div>
+
+
+
+
+{% endblock %}

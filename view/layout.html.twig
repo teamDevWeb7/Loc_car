@@ -20,6 +20,8 @@
                 si gestion route par gestion url gars peut acceder au fichier et donc activer fichier malveillant
                 donc pas de lien que html mais passage par routeur -->
                 <li><a href="/">Home</a></li>
+                <li><a href="{{path('user.login')}}">Inscription / Connexion</a></li>
+                
 
             </ul>
         </nav>
@@ -38,5 +40,9 @@
     <footer>
     <h1>Je suis le footer</h1>
     </footer>
+
+    {% block scripts %}
+    
+    {% endblock %}
     
 </body>
