@@ -13,23 +13,25 @@ use Core\toaster\Toaster;
 use Core\toaster\ToasterTwigExtension;
 
 return [
+    // info BDD
     "doctrine.user"=>"root",
     "doctrine.dbname"=>"loc_car",
     "doctrine.mdp"=>"",
     "doctrine.driver"=>"pdo_mysql",
     "doctrine.devMode"=>true,
 
+    // chemin default des views
     "config.viewPath"=>dirname(__DIR__).DIRECTORY_SEPARATOR.'view',
     "twig.extensions"=>[
         RouterTwigExtension::class,
         ToasterTwigExtension::class,
         AssetsTwigExtension::class
     ],
-    Router::class=>\DI\create(),
+    Router::class=>\DI\create(),//instancie si pas instance sinon redonne instance deja existante
     RendererInterface::class=>\DI\factory(TwigRendererFactory::class),
-    EntityManager::class=>\DI\factory(DatabaseFactory::class),
-    SessionInterface::class=>\DI\get(PHPSession::class),
-    Toaster::class=>\DI\autowire()
+    EntityManager::class=>\DI\factory(DatabaseFactory::class),//factory dit à DI que ce qu elle appelle doit construire un autre et on veut recup l instance qui arrive au final
+    SessionInterface::class=>\DI\get(PHPSession::class),//demande sessioninterface mais on attend PHPsession
+    Toaster::class=>\DI\autowire()//resout dependences
 ];
 
 // PHP DI objet complet pas besoin réadapter

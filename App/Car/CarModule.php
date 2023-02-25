@@ -22,22 +22,37 @@ use Psr\Container\ContainerInterface;
 use Core\Framework\Renderer\RendererInterface;
 use Core\Framework\AbstractClass\AbstractModule;
 
+/**
+ * @inheritDoc
+ */
 class CarModule extends AbstractModule{
     private Router $router;
     private RendererInterface $renderer;
     // private $repository;
     // private EntityManager $manager;
+
+ 
     public const DEFINITIONS =__DIR__.DIRECTORY_SEPARATOR.'config'.DIRECTORY_SEPARATOR.'config.php';
 
     // private $marqueRepository;
     // private Toaster $toaster;
     // private SessionInterface $session;
 
+
+    /**
+     * declare les routes et les methodes dispo pour ce module, definit le chemin vers le dossier de vues du module
+     * definit eventuellement des var globales a toutes les vues
+     * @param ContainerInterface $container
+     */
     public function __construct(ContainerInterface $container)
     {
         // manager class qui gere entities, manager va dire à autre class de faire action
+        
+        // router pr declarer les routes
         $this->router=$container->get(Router::class);
+        // renderer pr declarer les vues
         $this->renderer=$container->get(RendererInterface::class);
+        // ensemble actions possibles
         $carAction=$container->get(CarAction::class);
         $marqueAction=$container->get(MarqueAction::class);
 
@@ -48,18 +63,25 @@ class CarModule extends AbstractModule{
         // enregistrer new on use le manager
         // $this->manager=$manager;
 
-
+        // declaration du chemin des vues sous le namespace Car
         $this->renderer->addPath('Car', __DIR__.DIRECTORY_SEPARATOR.'view');
+
+
+
 
         $this->router->get('/admin/addVehicule', [$carAction, 'addCar'], 'Car.add');
 
         $this->router->get('/admin/listCar', [$carAction, 'listCar'], 'Car.list');
 
+        $this->router->get('/user/listVehicules', [$carAction, 'listeCar'], 'user.list');
+
         $this->router->post('/admin/listCar', [$carAction, 'listCar']);
 
         $this->router->post('/admin/addVehicule', [$carAction, 'addCar']);
 
-        $this->router->get('/infoCar/{id:[\d]+}', [$carAction, 'infoCar'], 'Car.info');
+        $this->router->get('/user/infoCar/{id:[\d]+}', [$carAction, 'infoCar'], 'Car.info');
+
+        $this->router->get('/admin/infoCar/{id:[\d]+}', [$carAction, 'infoCarAdmin'], 'Car.infos');
 
         // {:id} dire qu'on a var dynamique, d pr chiffre, + pr nbr
         $this->router->get('/admin/update/{id:[\d]+}', [$carAction, 'update'], 'car.update');

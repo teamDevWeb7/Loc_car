@@ -7,6 +7,12 @@ use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Core\Framework\Middleware\AbstractMiddleware;
 
+/**
+ * check que l url de la requete corresponde à une route, si oui on enregistre la route dans $request
+ * recup attribut de la method get
+ * sinon on passe la requete au middlexare suivant sans modif ds le but quelle finisse ds les notFoundMiddleware
+ * a besoin du router pour fonctionner(on donne container mais on passe par lui pour acceder au router)
+ */
 class RouterMiddleware extends AbstractMiddleware{
 
     private ContainerInterface $container;

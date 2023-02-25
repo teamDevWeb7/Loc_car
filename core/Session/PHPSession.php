@@ -12,9 +12,16 @@ class PHPSession implements SessionInterface{
     }
 
     public function set(string $key, $value):void{
+        // ecrase qd multi
         $this->startIfNot();
         $_SESSION[$key]=$value;
 
+    }
+
+    public function setArray(string $key, $value):void{
+        $this->startIfNot();
+        // si index $key existe pas il est créé et ensuite existe en tant que tab, donc qd on rajoute new value elle ne crase plus mais push
+        $_SESSION[$key][]=$value;
     }
 
     public function get(string $key, $default=null){

@@ -4,7 +4,7 @@ namespace Core\Framework\Middleware;
 use GuzzleHttp\Psr7\Response;
 use Psr\Http\Message\ServerRequestInterface;
 
-// premier middleware retire les shlashs
+// premier middleware retire les shlashs à la fin de l'url si il en a un
 
 class TrailingSlashMiddleware extends AbstractMiddleware{
 

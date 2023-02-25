@@ -1,0 +1,40 @@
+{% extends 'layout.html.twig' %}
+
+{% block body %}
+    <h1>Modifier les informations de {{user.nom}} {{user.prenom}}</h1>
+
+    <p>Les informations actuelles enregistrées :</p>
+    <table>
+        <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Prénom</th>
+                <th>Mail</th>
+            </tr>
+        </thead>
+        <tbody>
+                <tr>
+                    <td>{{ user.nom }}</td>
+                    <td>{{ user.prenom }}</td>
+                    <td>{{user.mail}}</td>
+                    {# <td>{{user.password}}</td> #}
+                </tr>
+        </tbody>
+    </table><br><br>
+    <form action="" method="POST">
+        <label for="nom">Modifier le nom:</label>
+        <input type="text" name="nom" id="nom" value="{{user.nom}}"><br>
+        <label for="prenom">Modifier le prénom:</label>
+        <input name="prenom" type="text" id="prenom" value="{{user.prenom}}"><br>
+        <label for="mdp">Modifier votre mot de passe:</label>
+        <input name="mdp" type="password" id="mdp"><br>
+        <label for="mdp_confirme">Vérifiez que vous n etes pas un gland:</label>
+        <input name="mdp_confirme" type="password" id="mdp_confirme"><br>
+        <label for="mdp">Merci de renseigner votre mot de passe actuel:</label>
+        <input name="mdp_confirm" type="password" id="mdp"><br>
+        <input type="submit" value="Modifier">
+    
+    
+    
+
+{% endblock %}

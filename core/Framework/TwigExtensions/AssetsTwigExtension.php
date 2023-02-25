@@ -5,6 +5,10 @@ use Exception;
 use Twig\TwigFunction;
 use Twig\Extension\AbstractExtension;
 
+/**
+ * extension twig permet d acceder directement au dossier public
+ * utile pour donner chemins des feuilles de style, js, img etc ->tt ce qui est ds assets de public
+ */
 class AssetsTwigExtension extends AbstractExtension{
 
     public function getFunctions(){

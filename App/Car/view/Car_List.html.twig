@@ -1,4 +1,4 @@
-{% extends 'admin.layout.html.twig' %}
+{% extends 'layout.html.twig' %}
 
 {% block body %}
     <h1>Liste des véhicules</h1>
@@ -25,11 +25,8 @@
                     </td>
                     <td>
 
-                        <a href="{{path('car.update', {id: voiture.id})}}">Modifier</a>
-                        <a href="{{path('car.delete', {id: voiture.id})}}">Supprimer</a>
 
-
-                        <a href="{{path('Car.infos', {id: voiture.id})}}">Voir</a>
+                        <a href="{{path('Car.info', {id: voiture.id})}}">Voir</a>
                     </td>
                 </tr>
             {% endfor %}

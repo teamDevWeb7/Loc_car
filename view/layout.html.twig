@@ -20,7 +20,20 @@
                 si gestion route par gestion url gars peut acceder au fichier et donc activer fichier malveillant
                 donc pas de lien que html mais passage par routeur -->
                 <li><a href="/">Home</a></li>
-                <li><a href="{{path('user.login')}}">Inscription / Connexion</a></li>
+
+
+                <li><a href="{{path('user.list')}}">Voir les véhicules</a></li>
+
+                {# avec twig extension #}
+                {% if user %}
+                    <li><a href="{{path('user.update')}}">Modifier mes informations</a></li>
+                    <li><a href="{{path('user.logout')}}">Deconnexion</a></li>
+
+                    {% else %}
+                    <li><a href="{{path('user.login')}}">Inscription / Connexion</a></li>
+
+                {% endif %}
+
                 
 
             </ul>
@@ -29,7 +42,9 @@
 
     <main>
         {% if hasToast() %}
-            {{renderToast()}}
+            {% for toast in renderToast() %}
+            {{ toast | raw}}
+            {% endfor %}
         {% endif %}
         {% block body %}
         <!-- inserer page ici -->

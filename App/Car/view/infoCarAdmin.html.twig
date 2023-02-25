@@ -1,0 +1,30 @@
+{% extends 'admin.layout.html.twig' %}
+
+{# lier css -> chemin par rapport à l'index de public, voir aussi index de public #}
+{% block stylesheet %}
+<link rel="stylesheet" href="./assets/css/car.info.css">
+{% endblock %}
+
+{% block body %}
+    <h1>Détails du véhicule</h1>
+
+
+    <h2>{{ voiture.marque.name }} | {{ voiture.model }}</h2>
+
+    <div class="detailContainer">
+        <div class="detailItem__group">
+            <span class="detailItem__label">Modèle</span>
+            <div class="detailItem__data">{{ voiture.model }}</div>
+        </div>
+        <div class="detailItem__group">
+            <span class="detailItem__label">Marque</span>
+            <div class="detailItem__data">{{ voiture.marque.name }}</div>
+        </div>
+        <div class="detailItem__group">
+            <span class="detailItem__label">Couleur</span>
+            <div class="detailItem__data">{{ voiture.color }}</div>
+        </div>
+    </div>
+
+
+{% endblock %}

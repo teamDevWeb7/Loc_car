@@ -26,6 +26,12 @@ class App{
 
     private MiddlewareInterface $middleware;
 
+    /**
+     * Initialise la liste des modules et enregistre le container
+     *
+     * @param ContainerInterface $container
+     * @param array $modules
+     */
     public function __construct(ContainerInterface $container, array $modules= [])
     {
         // charger modules et instancier
@@ -44,18 +50,36 @@ class App{
 
     }
 
+        /**
+         * traite requete serveur en
+         * lançant chaine responsabilité -> middleware
+         *
+         * @param ServerRequestInterface $request
+         * @return ResponseInterface
+         */
         public function run(ServerRequestInterface $request) : ResponseInterface{
 
             return $this->middleware->process($request);
         }
 
 
+        /**
+         * enregistre le premier middleware de la chaine de responsabilité
+         *
+         * @param MiddlewareInterface $middleware
+         * @return MiddlewareInterface
+         */
         public function linkFirst(MiddlewareInterface $middleware):MiddlewareInterface{
             $this->middleware=$middleware;
             return $middleware;
         }
 
 
+        /**
+         * retourne instance de PHP DI
+         *
+         * @return ContainerInterface
+         */
         public function getContainer():ContainerInterface{
             return $this->container;
         }

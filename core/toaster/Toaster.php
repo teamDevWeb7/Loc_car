@@ -27,25 +27,41 @@ class Toaster{
     public function makeToast(string $message, int $etat): void{
         switch($etat){
             case 0:
-                $this->session->set(self::SESSION_KEY, $this->toast->error($message));
+                $this->session->setArray(self::SESSION_KEY, $this->toast->error($message));
                 break;
             case 1:
-                $this->session->set(self::SESSION_KEY, $this->toast->warning($message));
+                $this->session->setArray(self::SESSION_KEY, $this->toast->warning($message));
                 break;
             case 2:
-                $this->session->set(self::SESSION_KEY, $this->toast->success($message));
+                $this->session->setArray(self::SESSION_KEY, $this->toast->success($message));
                 break;
         }
     }
 
-    public function renderToast():?string{
+    /**
+     * retourne les toasts si en a
+     *
+     * @return array|null
+     */
+    public function renderToast():?array{
+        // recup ts les toast enregistrés en session et on les stocke ds une var
         $toast=$this->session->get(self::SESSION_KEY);
+        // on supprime les toasts de la session mais on les conserve ds la varv $toast pr que toast apparait qu'une fois et que si je recherge c est supprimé
         $this->session->delete(self::SESSION_KEY);
         return $toast;
     }
 
+    /**
+     * check si il y a toasts à afficher, retourne bool
+     *
+     * @return boolean
+     */
     public function hasToast():bool{
-        return $this->session->has(self::SESSION_KEY);
+        if($this->session->has(self::SESSION_KEY)&& sizeof($this->session->get(self::SESSION_KEY))>0){
+            return true;
+        }else{
+            return false;
+        }
     }
 }
 

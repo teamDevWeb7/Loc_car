@@ -8,6 +8,11 @@ use Core\toaster\Toaster;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
+
+/**
+ * check si la route est protegée grâce au début de l url 
+ * si oui on s assure que le user a le droit d y acceder
+ */
 class UserAuthMiddleware extends AbstractMiddleware{
     use RedirectTrait;
 
@@ -22,6 +27,7 @@ class UserAuthMiddleware extends AbstractMiddleware{
 
     public function process(ServerRequestInterface $request){
         $uri=$request->getUri()->getPath();
+        // check si url commence par /user
         if(str_starts_with($uri, '/user')){
             $auth=$this->container->get(UserAuth::class);
             if(!$auth->isLogged() || !$auth->isUser()){

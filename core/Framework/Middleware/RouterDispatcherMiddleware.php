@@ -6,6 +6,9 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Exception;
 
+/**
+ * si une route a été matchée,appel la fonction liée à la route
+ */
 class RouterDispatcherMiddleware extends AbstractMiddleware{
     public function process(ServerRequestInterface $request)
     {
