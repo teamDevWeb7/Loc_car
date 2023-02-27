@@ -31,7 +31,7 @@ class AdminAuthMiddleware extends AbstractMiddleware{
             // on check si l admin est co et que c est bien un admin
             if(!$auth->isLogged()){
                 // si personne n est co on renvoit un toast en csq
-                if(!$auth->isLogged()){
+                if(!$auth->isLogged() || !$auth->isAdmin()){
                     $this->toaster->makeToast("Vous devez être connecté pr accéder à cette page", Toaster::ERROR);
                     // si co mais pas admin
                 }elseif(!$auth->isAdmin()){

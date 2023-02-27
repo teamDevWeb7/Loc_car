@@ -87,6 +87,8 @@ class UserAction{
         $method=$request->getMethod();
 
         if($method === 'POST'){
+            // retrouver l id du user pour faire les modifs en BDD
+            $user = $this->repository->find($user->getId());
             $data=$request->getParsedBody();
             $validator=new Validator($data);
             $errors=$validator
@@ -124,20 +126,28 @@ class UserAction{
 
                         $hash=password_hash($data['mdp'], PASSWORD_BCRYPT);
                         $user->setPassword($hash);
-
-
                         }
                     }
+                }
+
+                if(($data['nom']===$user->getNom()) && ($data['prenom']===$user->getPrenom())){
+                    $this->toaster->makeToast('Faut changer un truc avant d envoyer', Toaster::ERROR);
+                        return $this->redirect('user.update');
+
                 }
 
                 $user->setNom($data['nom'])
                         ->setPrenom($data['prenom']);
 
                 $this->manager->flush();
+                // mettre à jour la session sur les infos bdd va avec le find('id');
+                $this->session->set('auth', $user);
 
 
                 $this->toaster->makeToast('Les modifications sont prises en compte', Toaster::SUCCESS);
                 return $this->redirect('user.update');
+                // pas pris en compte ds BDD
+                // et pb hearder qd pas co qd meme header user
 
             }else{
                 $this->toaster->makeToast('Déso, tu t\'es planté sur ton mot de passe tête de noeuds ', Toaster::ERROR);
